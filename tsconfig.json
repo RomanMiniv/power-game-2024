@@ -1,8 +1,12 @@
 {
 	"compilerOptions": {
 		"allowJs": false,
-		"module": "ES2022",
+		"module": "NodeNext",
 		"target": "ES2022",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "strictPropertyInitialization": false
 	},
   "include": [
     "src",
