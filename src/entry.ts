@@ -1,6 +1,10 @@
 import Phaser from "phaser";
-import Boot from "./game/scenes/Boot";
-import Menu from "./game/scenes/Menu";
+import Boot from "./game/scenes/Boot/Boot";
+import Menu from "./game/scenes/Menu/Menu";
+import Game from "./game/scenes/Game/Game";
+import Options from "./game/scenes/Menu/scenes/Options/Options";
+import ExtraFeatures from "./game/scenes/Menu/scenes/ExtraFeatures/ExtraFeatures";
+import Credits from "./game/scenes/Menu/scenes/Credits/Credits";
 
 const parent = document.getElementById("root") as HTMLDivElement;
 
@@ -18,7 +22,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: "arcade",
     arcade: {},
   },
-  scene: [Boot, Menu],
+  scene: [Boot, Menu, Options, ExtraFeatures, Credits, Game],
 };
 
 const game = new Phaser.Game(config);

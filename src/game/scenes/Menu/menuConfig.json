@@ -1,0 +1,25 @@
+[
+  {
+    "label": "Start new game",
+    "sceneKey": "Game"
+  },
+  {
+    "label": "Continue (0%)",
+    "sceneKey": "Game"
+  },
+  {
+    "label": "Options",
+    "sceneKey": "Options"
+  },
+  {
+    "label": "Extra Features",
+    "sceneKey": "ExtraFeatures"
+  },
+  {
+    "label": "Credits",
+    "sceneKey": "Credits"
+  },
+  {
+    "label": "Quit"
+  }
+]

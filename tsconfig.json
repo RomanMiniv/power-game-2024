@@ -6,7 +6,8 @@
     "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true
 	},
   "include": [
     "src",
