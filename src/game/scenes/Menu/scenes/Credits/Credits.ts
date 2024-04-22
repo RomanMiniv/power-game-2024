@@ -1,9 +1,10 @@
-import Phaser from "phaser";
+import { Scene } from "phaser";
+import { SceneNames } from "../../../../shared/Names";
 
 export default class Credits extends Phaser.Scene {
   constructor() {
     super({
-      key: "Credits",
+      key: SceneNames.CREDITS,
     });
   }
 

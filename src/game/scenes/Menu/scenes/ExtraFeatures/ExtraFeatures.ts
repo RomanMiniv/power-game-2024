@@ -1,9 +1,9 @@
-import Phaser from "phaser";
+import { SceneNames } from "../../../../shared/Names";
 
 export default class ExtraFeatures extends Phaser.Scene {
   constructor() {
     super({
-      key: "ExtraFeatures",
+      key: SceneNames.EXTRA_FEATURES,
     });
   }
 
