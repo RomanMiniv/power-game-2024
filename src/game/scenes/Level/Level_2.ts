@@ -85,7 +85,7 @@ export class Level_2 extends Level {
     }
     const sideSize: number = this._groupAmount * this._cellSize + this._groupAmount * (this._cellOffset - 1);
     this._gameAreaContainer.x -= sideSize / 2;
-    this._gameAreaContainer.y -= sideSize / 2;
+    this._gameAreaContainer.y -= sideSize / 2 + height / 10;
   }
 
   drawShape([reel, row]: number[], isPlayerShape: boolean): void {
@@ -149,13 +149,9 @@ export class Level_2 extends Level {
     const text = "Haha, that's crazy";
     this.showHint(text);
     this.playAudioSpeech(text);
-    
 
-    this.time.addEvent({
-      delay: 2500,
-      callback: () => {
-        this.showPower();
-      },
+    this.time.delayedCall(2500, () => {
+      this.showPower();
     });
   }
 

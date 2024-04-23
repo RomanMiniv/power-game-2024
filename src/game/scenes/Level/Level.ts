@@ -8,18 +8,23 @@ export class Level extends Phaser.Scene {
       fontSize: 24,
       color: "yellow",
       backgroundColor: "#111",
-    }).setOrigin(.5).setPadding(10);
+    }).setPadding(10).setOrigin(.5);
     return hint;
   }
 
-  playAudioSpeech(text: string): void {
+  async playAudioSpeech(text: string): Promise<void> {
     // todo: fix speech after reload
     // todo: add possibility on/off audio into Options scene
-    const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
-    speechSynthesisUtterance.lang = "en-US";
-    speechSynthesis.addEventListener("voiceschanged", () => {
-      speechSynthesisUtterance.voice = speechSynthesis.getVoices()[5];
-      speechSynthesis.speak(speechSynthesisUtterance);
+    return new Promise((resolve) => {
+      const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+      speechSynthesisUtterance.addEventListener("end", () => {
+        resolve();
+      })
+      speechSynthesisUtterance.lang = "en-US";
+      speechSynthesis.addEventListener("voiceschanged", () => {
+        speechSynthesisUtterance.voice = speechSynthesis.getVoices()[5];
+        speechSynthesis.speak(speechSynthesisUtterance);
+      });
     });
   }
 

@@ -19,7 +19,7 @@ export class Player extends Entity {
   bulletManager: BulletManager;
 
   physicsStuff: Phaser.Physics.Arcade.StaticGroup;
-  shield: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+  private _shield: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number) {
     super(scene, x, y, texture, frame);
@@ -67,9 +67,13 @@ export class Player extends Entity {
     if (this._inputControl.left.isDown) {
       this.setVelocity(-this._velocity, 0);
     }
-    if (!this._inputControl.down.isDown && !this._inputControl.right.isDown && !this._inputControl.left.isDown && !this._inputControl.up.isDown) {
+    if (!this.isMovable()) {
       this.setVelocity(0);
     }
+  }
+
+  isMovable(): boolean {
+    return this._inputControl.down.isDown || this._inputControl.right.isDown || this._inputControl.left.isDown || this._inputControl.up.isDown;
   }
 
   attack(to: IPosition): void {
@@ -78,25 +82,25 @@ export class Player extends Entity {
 
   setShield(): void {
     if (this._inputControl.space.isDown) {
-      if (!this.shield) {
+      if (!this._shield) {
         // todo: bind to timer recharge (cooldown)
-        this.shield = this.scene.physics.add.image(this.x, this.y, TextureNames.RECT).setAlpha(.1).setDirectControl(true);
-        this.physicsStuff.add(this.shield);
+        this._shield = this.scene.physics.add.image(this.x, this.y, TextureNames.RECT).setAlpha(.1).setDirectControl(true);
+        this.physicsStuff.add(this._shield);
 
         this.scene.tweens.add({
-          targets: this.shield,
+          targets: this._shield,
           scale: 6,
           duration: 200,
           onComplete: () => {
             this.scene.tweens.add({
-              targets: this.shield,
+              targets: this._shield,
               alpha: .115,
               duration: 200,
               yoyo: true,
               repeat: 2,
               onComplete: () => {
-                this.physicsStuff.remove(this.shield, true, true);
-                this.shield = null;
+                this.physicsStuff.remove(this._shield, true, true);
+                this._shield = null;
               }
             });
           }

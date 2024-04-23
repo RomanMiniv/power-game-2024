@@ -7,7 +7,7 @@ export const levelConfig = {
       powerName: "Imagination power",
     },
     {
-      powerName: "3 power",
+      powerName: "Patience power",
     },
     {
       powerName: "4 power",
