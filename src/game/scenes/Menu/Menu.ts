@@ -1,10 +1,6 @@
-import { SceneNames } from "../../shared/Names";
-import menuConfigPath from "./menuConfig.json";
-
-interface IMenuConfig {
-  label: string;
-  sceneKey?: string;
-}
+import { SceneNames, StorageNames } from "../../shared/Names";
+import { levelConfig } from "../Level/LevelConfig";
+import { menuConfig } from "./menuConfig";
 
 export default class Menu extends Phaser.Scene {
   constructor() {
@@ -17,7 +13,6 @@ export default class Menu extends Phaser.Scene {
   }
 
   preload() {
-    this.load.json("menuConfig", menuConfigPath);
   }
 
   create() {
@@ -27,12 +22,9 @@ export default class Menu extends Phaser.Scene {
   createLogo(): void {
     const logo = this.add.text(60, 40, "What power?", {
       fontSize: 64,
-      stroke: "#ff0000",
     });
   }
   createMenu(): void {
-    const menuConfig: IMenuConfig[] = this.cache.json.get("menuConfig");
-
     const { width, height } = this.scale;
     const menuContainer = this.add.container(width / 2, height / 2);
     menuConfig.forEach((menuItem, index) => {
@@ -45,18 +37,31 @@ export default class Menu extends Phaser.Scene {
       text.setInteractive({
         useHandCursor: true,
       })
-        .on("pointerover", (event: unknown) => {
+        .on("pointerover", () => {
           text.setTint(0xff0000);
         })
-        .on("pointerout", (event: unknown) => {
+        .on("pointerout", () => {
           text.clearTint();
         })
-        .on("pointerdown", (event: unknown) => {
+        .on("pointerdown", () => {
+          if (menuItem.label.includes("Start")) { // todo: refactor
+            window.localStorage.removeItem(StorageNames.LEVEL);
+          }
           this.scene.start(menuItem.sceneKey);
-
         });
 
       menuContainer.add(text);
+
+      if (menuItem.label.includes("Continue")) {  // todo: refactor
+        const level = window.localStorage.getItem(StorageNames.LEVEL);
+        if (!level) {
+          text.disableInteractive();
+          text.setAlpha(.5);
+        } else {
+          const percentagePassedGame: number = Math.round((+level / levelConfig.levels.length) * 100);
+          text.setText(text.text.replace(/\d/, `${percentagePassedGame}`));
+        }
+      }
     });
     menuContainer.y -= (menuContainer.list[menuContainer.list.length - 1] as Phaser.GameObjects.Text).y / 2;
   }

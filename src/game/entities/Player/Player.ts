@@ -79,7 +79,7 @@ export class Player extends Entity {
   setShield(): void {
     if (this._inputControl.space.isDown) {
       if (!this.shield) {
-        // todo: bind to timer recharge
+        // todo: bind to timer recharge (cooldown)
         this.shield = this.scene.physics.add.image(this.x, this.y, TextureNames.RECT).setAlpha(.1).setDirectControl(true);
         this.physicsStuff.add(this.shield);
 

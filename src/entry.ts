@@ -6,6 +6,7 @@ import Options from "./game/scenes/Menu/scenes/Options/Options";
 import ExtraFeatures from "./game/scenes/Menu/scenes/ExtraFeatures/ExtraFeatures";
 import Credits from "./game/scenes/Menu/scenes/Credits/Credits";
 import Popup from "./game/scenes/Popup/Popup";
+import LevelManager from "./game/scenes/Level/LevelManager";
 
 const parent = document.getElementById("root") as HTMLDivElement;
 
@@ -19,7 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
     height: 768,
   },
   type: Phaser.AUTO,
-  scene: [Boot, Menu, Options, ExtraFeatures, Credits, Game, Popup],
+  scene: [Boot, Menu, Options, ExtraFeatures, Credits, Game, Popup, LevelManager],
 };
 
 const game = new Phaser.Game(config);

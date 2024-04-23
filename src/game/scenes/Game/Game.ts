@@ -127,15 +127,14 @@ export default class Game extends Phaser.Scene {
   }
 
   setVictory(): void {
-    // todo: start game level
-    this.scene.start(SceneNames.MENU);
+    this.scene.start(SceneNames.LEVEL_MANAGER);
   }
   setDefeat(): void {
     if (this.scene.isPaused(this)) {
       return;
     }
     this.scene.pause(this);
-    this.scene.launch("Popup");
+    this.scene.launch(SceneNames.POPUP);
   }
 
   update(time: number, delta: number): void {

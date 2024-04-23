@@ -14,4 +14,13 @@ export class SceneNames {
   static CREDITS = "Credits";
   static GAME = "Game";
   static POPUP = "Popup";
+  static LEVEL_MANAGER = "LevelManager";
+}
+
+export class EventNames {
+  static LEVEL_PASSED = "levelPassed";
+}
+
+export class StorageNames {
+  static LEVEL = "level";
 }
