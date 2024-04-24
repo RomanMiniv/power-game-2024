@@ -20,7 +20,7 @@ export class Level_2 extends Level {
   private _gameAreaContainer: Phaser.GameObjects.Container
 
   private readonly _groupAmount: number = 3;
-  private readonly _cellSize: number = 125;
+  private readonly _cellSize: number = 110;
   private readonly _lineWidth: number = 4;
   private readonly _cellOffset: number = (this._cellSize / 10) + this._lineWidth;
 
@@ -85,7 +85,7 @@ export class Level_2 extends Level {
     }
     const sideSize: number = this._groupAmount * this._cellSize + this._groupAmount * (this._cellOffset - 1);
     this._gameAreaContainer.x -= sideSize / 2;
-    this._gameAreaContainer.y -= sideSize / 2 + height / 10;
+    this._gameAreaContainer.y -= sideSize / 2 + this._cellSize / 2;
   }
 
   drawShape([reel, row]: number[], isPlayerShape: boolean): void {

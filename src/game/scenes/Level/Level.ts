@@ -1,6 +1,9 @@
 import { EventNames } from "../../shared/Names";
 import { levelConfig } from "./LevelConfig";
 
+import EasySpeech from "easy-speech";
+EasySpeech.init();
+
 export class Level extends Phaser.Scene {
   showHint(text: string): Phaser.GameObjects.Text {
     const { width, height } = this.scale;
@@ -12,19 +15,11 @@ export class Level extends Phaser.Scene {
     return hint;
   }
 
-  async playAudioSpeech(text: string): Promise<void> {
-    // todo: fix speech after reload
+  async playAudioSpeech(text: string) {
     // todo: add possibility on/off audio into Options scene
-    return new Promise((resolve) => {
-      const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
-      speechSynthesisUtterance.addEventListener("end", () => {
-        resolve();
-      })
-      speechSynthesisUtterance.lang = "en-US";
-      speechSynthesis.addEventListener("voiceschanged", () => {
-        speechSynthesisUtterance.voice = speechSynthesis.getVoices()[5];
-        speechSynthesis.speak(speechSynthesisUtterance);
-      });
+    return EasySpeech.speak({
+      text,
+      voice: EasySpeech.voices()[5],
     });
   }
 
