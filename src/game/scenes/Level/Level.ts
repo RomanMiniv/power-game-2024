@@ -1,5 +1,6 @@
 import { Player } from "../../entities/Player/Player";
 import { EventNames, SceneNames } from "../../shared/Names";
+import { IPopupData } from "../Popup/Popup";
 import { levelConfig } from "./LevelConfig";
 
 import EasySpeech from "easy-speech";
@@ -11,6 +12,33 @@ export class LevelPlayer extends Player {
 }
 
 export class Level extends Phaser.Scene {
+  create() {
+    const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    escKey.on("down", () => {
+      this.scene.pause();
+
+      const popupData: IPopupData = {
+        title: "Pause",
+        menuConfig: [
+          {
+            label: "Continue",
+            callback: () => {
+              this.scene.resume();
+            },
+          },
+          {
+            label: "Quit Game",
+            callback: () => {
+              this.scene.stop("Game");
+              this.scene.start(SceneNames.MENU);
+            },
+          }
+        ]
+      };
+      this.scene.launch(SceneNames.POPUP, popupData);
+    });
+  }
+
   showHint(text: string): Phaser.GameObjects.Text {
     const { width, height } = this.scale;
     const hint = this.add.text(width / 2, height - height / 8, text, {
@@ -46,8 +74,6 @@ export class Level extends Phaser.Scene {
       repeat: 1,
       ease: "sine.inout",
       onComplete: () => {
-        // todo
-        // show popup: continue or quit
         this.scene.get(SceneNames.LEVEL_MANAGER).input.emit(EventNames.LEVEL_PASSED);
       }
     });

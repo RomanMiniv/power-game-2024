@@ -14,6 +14,8 @@ export class Level_9 extends Level {
   }
 
   create() {
+    super.create();
+    
     const { width, height } = this.scale;
     this.showPower();
   }

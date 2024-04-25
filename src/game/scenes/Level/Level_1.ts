@@ -17,6 +17,8 @@ export class Level_1 extends Level {
   }
 
   create() {
+    super.create();
+    
     const { width, height } = this.scale;
 
     const hint = this.showHint("Click to play the next step");

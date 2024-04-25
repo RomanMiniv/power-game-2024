@@ -23,6 +23,8 @@ export class Level_13 extends Level {
   }
 
   create() {
+    super.create();
+    
     const { width, height } = this.scale;
 
     const userIcon = this.add.text(width / 2, height / 3, this._userIcons[this._userIconIndex], {

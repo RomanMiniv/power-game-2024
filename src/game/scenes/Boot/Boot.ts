@@ -77,7 +77,6 @@ export default class Boot extends Phaser.Scene {
     graphicsTexture.clear();
     graphicsTexture.destroy();
 
-    // todo: play with lineWidth at the end
     const lineWidth: number = 2;
     graphicsTexture = this.make.graphics().lineStyle(lineWidth, 0x00ff00)
       .strokeTriangle(50 + lineWidth, lineWidth, 100 + lineWidth, 50 + lineWidth, lineWidth, 50 + lineWidth);

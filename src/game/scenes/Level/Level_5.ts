@@ -27,6 +27,8 @@ export class Level_5 extends Level {
   }
 
   create() {
+    super.create();
+    
     const { width, height } = this.scale;
     this.physics.world.setBoundsCollision(true, true, false, false);
 

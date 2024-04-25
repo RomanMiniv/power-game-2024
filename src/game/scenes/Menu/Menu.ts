@@ -1,5 +1,6 @@
 import { SceneNames, StorageNames } from "../../shared/Names";
 import { levelConfig } from "../Level/LevelConfig";
+import { IPopupData } from "../Popup/Popup";
 import { menuConfig } from "./menuConfig";
 
 export default class Menu extends Phaser.Scene {
@@ -45,7 +46,34 @@ export default class Menu extends Phaser.Scene {
         })
         .on("pointerdown", () => {
           if (menuItem.label.includes("Start")) { // todo: refactor
-            window.localStorage.removeItem(StorageNames.LEVEL);
+            const level = window.localStorage.getItem(StorageNames.LEVEL);
+            if (level) {
+              this.scene.pause(this);
+
+              const popupData: IPopupData = {
+                title: "Are you sure?",
+                subTitle: "All data will be reset.",
+                menuConfig: [
+                  {
+                    label: "Yes",
+                    callback: () => {
+                      window.localStorage.removeItem(StorageNames.LEVEL);
+                      this.scene.start(SceneNames.GAME);
+                    },
+                  },
+                  {
+                    label: "No",
+                    callback: () => {
+                      this.scene.resume(SceneNames.MENU);
+                    },
+                  }
+                ]
+              };
+              this.scene.launch(SceneNames.POPUP, popupData);
+              return;
+            } else {
+              window.localStorage.removeItem(StorageNames.LEVEL);
+            }
           }
           this.scene.start(menuItem.sceneKey);
         });

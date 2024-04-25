@@ -28,6 +28,8 @@ export class Level_6 extends Level {
   }
 
   create() {
+    super.create();
+    
     const hint = this.showHint("We can't do much alone");
 
     const { width, height } = this.scale;

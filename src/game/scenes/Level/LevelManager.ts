@@ -1,4 +1,5 @@
 import { EventNames, SceneNames, StorageNames } from "../../shared/Names";
+import { IPopupData } from "../Popup/Popup";
 import { Level_1 } from "./Level_1";
 import { Level_10 } from "./Level_10";
 import { Level_11 } from "./Level_11";
@@ -54,7 +55,8 @@ export default class LevelManager extends Phaser.Scene {
     this.input.on(EventNames.LEVEL_PASSED, () => {
       this.scene.remove(levelSceneKey);
       this.updateLevelState();
-      this.scene.start(SceneNames.MENU);
+
+      this.showPopup();
     });
 
     this.scene.launch(levelSceneKey);
@@ -67,6 +69,28 @@ export default class LevelManager extends Phaser.Scene {
       currentLevel = 1;
     }
     window.localStorage.setItem(StorageNames.LEVEL, String(currentLevel));
+  }
+
+  showPopup() {
+    const popupData: IPopupData = {
+      title: "Level passed",
+      menuConfig: [
+        {
+          label: "Continue",
+          callback: () => {
+            this.scene.start(SceneNames.GAME);
+          },
+        },
+        {
+          label: "Quit Game",
+          callback: () => {
+            this.scene.start(SceneNames.MENU);
+          },
+        }
+      ]
+    };
+    this.scene.launch(SceneNames.POPUP, popupData);
+
   }
 
   update(time: number, delta: number): void {

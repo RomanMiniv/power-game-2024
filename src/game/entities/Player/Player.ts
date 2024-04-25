@@ -21,6 +21,8 @@ export class Player extends Entity {
   physicsStuff: Phaser.Physics.Arcade.StaticGroup;
   private _shield: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
+  private isCharged: boolean = true;
+
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number) {
     super(scene, x, y, texture, frame);
     scene.add.existing(this);
@@ -82,8 +84,8 @@ export class Player extends Entity {
 
   setShield(): void {
     if (this._inputControl.space.isDown) {
-      if (!this._shield) {
-        // todo: bind to timer recharge (cooldown)
+      if (!this._shield && this.isCharged) {
+        this.isCharged = false;
         this._shield = this.scene.physics.add.image(this.x, this.y, TextureNames.RECT).setAlpha(.1).setDirectControl(true);
         this.physicsStuff.add(this._shield);
 
@@ -92,6 +94,7 @@ export class Player extends Entity {
           scale: 6,
           duration: 200,
           onComplete: () => {
+            this.setAlpha(.5);
             this.scene.tweens.add({
               targets: this._shield,
               alpha: .115,
@@ -99,6 +102,7 @@ export class Player extends Entity {
               yoyo: true,
               repeat: 2,
               onComplete: () => {
+                this.recharge();
                 this.physicsStuff.remove(this._shield, true, true);
                 this._shield = null;
               }
@@ -107,5 +111,16 @@ export class Player extends Entity {
         });
       }
     }
+  }
+
+  recharge(): void {
+    this.scene.tweens.add({
+      targets: this,
+      alpha: 1,
+      duration: 2000,
+      onComplete: () => {
+        this.isCharged = true;
+      }
+    });
   }
 }

@@ -1,6 +1,8 @@
-import { SceneNames, TextureNames } from "../../shared/Names";
+import { SceneNames, StorageNames, TextureNames } from "../../shared/Names";
 import { Player } from "../../entities/Player/Player";
 import { ComputerAI } from "../../entities/ComputerAI/ComputerAI";
+import { levelConfig } from "../Level/LevelConfig";
+import { IPopupData } from "../Popup/Popup";
 
 export default class Game extends Phaser.Scene {
   door: Phaser.GameObjects.Text;
@@ -26,6 +28,31 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    escKey.on("down", () => {
+      this.scene.pause();
+
+      const popupData: IPopupData = {
+        title: "Pause",
+        menuConfig: [
+          {
+            label: "Continue",
+            callback: () => {
+              this.scene.resume();
+            },
+          },
+          {
+            label: "Quit Game",
+            callback: () => {
+              this.scene.stop("Game");
+              this.scene.start(SceneNames.MENU);
+            },
+          }
+        ]
+      };
+      this.scene.launch(SceneNames.POPUP, popupData);
+    });
+
     // todo: refactor world dimensions
     const bg = this.add.image(0, 0, "prince").setOrigin(0).setAlpha(0);
     this.physics.world.setBounds(0, 0, bg.width, bg.height);
@@ -127,14 +154,38 @@ export default class Game extends Phaser.Scene {
   }
 
   setVictory(): void {
-    this.scene.start(SceneNames.LEVEL_MANAGER);
+    const currentLevel = +window.localStorage.getItem(StorageNames.LEVEL);
+    if (currentLevel === levelConfig.levels.length) {
+      this.scene.start(SceneNames.MENU);
+    } else {
+      this.scene.start(SceneNames.LEVEL_MANAGER);
+    }
   }
   setDefeat(): void {
     if (this.scene.isPaused(this)) {
       return;
     }
     this.scene.pause(this);
-    this.scene.launch(SceneNames.POPUP);
+
+    const popupData: IPopupData = {
+      title: "Game Over",
+      menuConfig: [
+        {
+          label: "Retry",
+          callback: () => {
+            this.scene.start(SceneNames.GAME);
+          },
+        },
+        {
+          label: "Quit Game",
+          callback: () => {
+            this.scene.stop("Game");
+            this.scene.start(SceneNames.MENU);
+          },
+        }
+      ]
+    };
+    this.scene.launch(SceneNames.POPUP, popupData);
   }
 
   update(time: number, delta: number): void {

@@ -25,6 +25,8 @@ export class Level_4 extends Level {
   }
 
   create() {
+    super.create();
+    
     const hint = this.showHint("Good luck, cowboy!");
 
     this.setIcons();

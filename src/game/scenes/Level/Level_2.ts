@@ -37,6 +37,8 @@ export class Level_2 extends Level {
   }
 
   create() {
+    super.create();
+    
     this.setGameArea();
     this._gameArea[this._firstPCChoice[0]][this._firstPCChoice[1]].view.emit("pointerdown", false);
   }

@@ -14,6 +14,11 @@ export default class ExtraFeatures extends Phaser.Scene {
   }
 
   create() {
+    const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    escKey.on("down", () => {
+      this.scene.start(SceneNames.MENU);
+    });
+
     const { width, height } = this.scale;
     this.add.text(width / 2, height / 2, "ExtraFeatures");
   }

@@ -29,6 +29,8 @@ export class Level_3 extends Level {
   }
 
   create() {
+    super.create();
+    
     const { width, height } = this.scale;
 
     this._spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
