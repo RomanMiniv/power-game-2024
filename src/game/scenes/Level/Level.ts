@@ -1,8 +1,14 @@
-import { EventNames } from "../../shared/Names";
+import { Player } from "../../entities/Player/Player";
+import { EventNames, SceneNames } from "../../shared/Names";
 import { levelConfig } from "./LevelConfig";
 
 import EasySpeech from "easy-speech";
 EasySpeech.init();
+
+export class LevelPlayer extends Player {
+  setShield(): void {
+  }
+}
 
 export class Level extends Phaser.Scene {
   showHint(text: string): Phaser.GameObjects.Text {
@@ -28,7 +34,7 @@ export class Level extends Phaser.Scene {
 
     const bg = this.add.graphics().fillStyle(0x141419).fillRect(0, 0, width, height).setAlpha(.9);
 
-    const text = this.add.text(width / 2, height / 2, levelConfig.levels[this.getLevelSequenceNumber() - 1].powerName, {
+    const text = this.add.text(width / 2, height / 2, levelConfig.levels[this.getLevelSequenceNumber() - 1].powerName + " power", {
       fontSize: 96,
     }).setOrigin(.5);
 
@@ -42,12 +48,19 @@ export class Level extends Phaser.Scene {
       onComplete: () => {
         // todo
         // show popup: continue or quit
-        this.input.emit(EventNames.LEVEL_PASSED);
+        this.scene.get(SceneNames.LEVEL_MANAGER).input.emit(EventNames.LEVEL_PASSED);
       }
     });
   }
 
   getLevelSequenceNumber(): number {
     return +this.scene.key.match(/\d+/)[0];
+  }
+
+  restart(): void {
+    this.resetState();
+    this.scene.restart();
+  }
+  resetState() {
   }
 }

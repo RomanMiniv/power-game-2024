@@ -107,7 +107,14 @@ export class Level_1 extends Level {
 
       if (messageIndex === messages[0].length) {
         this.input.enabled = false;
-        this.showPower();
+
+        const text = "Happiness is not in money";
+        this.showHint(text);
+        this.playAudioSpeech(text);
+
+        this.time.delayedCall(3000, () => {
+          this.showPower();
+        });
         return;
       }
 

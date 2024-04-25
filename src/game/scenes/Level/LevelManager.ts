@@ -48,9 +48,10 @@ export default class LevelManager extends Phaser.Scene {
     const nextLevel = +(window.localStorage.getItem(StorageNames.LEVEL) as unknown as number || 0) + 1;
 
     const levelSceneKey = `Level_${nextLevel}`;
-    this.scene.add(levelSceneKey, levels[nextLevel - 1]);
+    const levelScene = levels[nextLevel - 1];
+    this.scene.add(levelSceneKey, levelScene);
 
-    this.scene.get(levelSceneKey).input.on(EventNames.LEVEL_PASSED, () => {
+    this.input.on(EventNames.LEVEL_PASSED, () => {
       this.scene.remove(levelSceneKey);
       this.updateLevelState();
       this.scene.start(SceneNames.MENU);
