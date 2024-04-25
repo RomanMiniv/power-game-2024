@@ -19,6 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
     width: 1366,
     height: 768,
   },
+  disableContextMenu: true,
   type: Phaser.AUTO,
   scene: [Boot, Menu, Options, ExtraFeatures, Credits, Game, Popup, LevelManager],
 };

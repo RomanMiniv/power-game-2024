@@ -1,28 +1,28 @@
 export const levelConfig = {
   levels: [
     {
-      powerName: "Money",
+      powerName: "Money power",
     },
     {
-      powerName: "Imagination",
+      powerName: "Imagination power",
     },
     {
-      powerName: "Patience",
+      powerName: "Patience power",
     },
     {
-      powerName: "Luck",
+      powerName: "Luck power",
     },
     {
-      powerName: "Gravity",
+      powerName: "Gravity power",
     },
     {
-      powerName: "Unity",
+      powerName: "Unity power",
     },
     {
-      powerName: "7",
+      powerName: "Magnetic power",
     },
     {
-      powerName: "8",
+      powerName: "Faith power",
     },
     {
       powerName: "9",
@@ -37,7 +37,7 @@ export const levelConfig = {
       powerName: "12",
     },
     {
-      powerName: "13",
+      powerName: "Word power",
     },
   ]
 };

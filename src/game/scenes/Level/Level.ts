@@ -34,7 +34,7 @@ export class Level extends Phaser.Scene {
 
     const bg = this.add.graphics().fillStyle(0x141419).fillRect(0, 0, width, height).setAlpha(.9);
 
-    const text = this.add.text(width / 2, height / 2, levelConfig.levels[this.getLevelSequenceNumber() - 1].powerName + " power", {
+    const text = this.add.text(width / 2, height / 2, levelConfig.levels[this.getLevelSequenceNumber() - 1].powerName, {
       fontSize: 96,
     }).setOrigin(.5);
 
