@@ -1,1 +1,1 @@
-Nulla
+What power?
