@@ -17,7 +17,7 @@ export class MeleeManager extends EntityManager {
       const { x, y } = this.getRandomPositionOutPlayerSafeZone();
       const melee = new Melee(this.scene, x, y, TextureNames.TRAPEZIUM);
       this.add(melee);
-      melee.init(); // todo: rewrite to builder
+      melee.init(); // todo: rewrite to builder?
     }
   }
   getRandomPositionOutPlayerSafeZone(): IPosition {

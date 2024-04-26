@@ -19,7 +19,6 @@ export class ComputerAI extends Phaser.Physics.Arcade.Group {
     this.setBehaviour();
   }
   setBehaviour(): void {
-    // todo: bind new wave time and amount to level?
     this.generateWave();
     this.scene.time.addEvent({
       delay: 10000,
@@ -28,8 +27,6 @@ export class ComputerAI extends Phaser.Physics.Arcade.Group {
     });
   }
   generateWave(): void {
-    // todo: bind to timer or add text like "new wave"
-
     const currentLevel = +window.localStorage.getItem(StorageNames.LEVEL);
 
     const adtEnemies: number = Math.round(currentLevel / 2);
