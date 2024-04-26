@@ -33,8 +33,7 @@ export class Level extends Phaser.Scene {
           {
             label: "Quit Game",
             callback: () => {
-              this.scene.stop("Game");
-              this.scene.start(SceneNames.MENU);
+              this.finish(true);
             },
           }
         ]
@@ -81,7 +80,7 @@ export class Level extends Phaser.Scene {
       repeat: 1,
       ease: "sine.inout",
       onComplete: () => {
-        this.scene.get(SceneNames.LEVEL_MANAGER).input.emit(EventNames.LEVEL_PASSED);
+        this.finish();
       }
     });
   }
@@ -95,5 +94,9 @@ export class Level extends Phaser.Scene {
     this.scene.restart();
   }
   resetState() {
+  }
+
+  finish(force: boolean = false): void {
+    this.scene.get(SceneNames.LEVEL_MANAGER).input.emit(EventNames.LEVEL_PASSED, force);
   }
 }

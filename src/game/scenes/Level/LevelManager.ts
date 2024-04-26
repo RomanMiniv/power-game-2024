@@ -14,6 +14,10 @@ import { Level_7 } from "./Level_7";
 import { Level_8 } from "./Level_8";
 import { Level_9 } from "./Level_9";
 
+export interface ILevelManagerData {
+  level: number;
+}
+
 export default class LevelManager extends Phaser.Scene {
   static LEVEL_AMOUNT: number = 13;
 
@@ -46,20 +50,38 @@ export default class LevelManager extends Phaser.Scene {
       Level_12,
       Level_13
     ];
-    const nextLevel = +(window.localStorage.getItem(StorageNames.LEVEL) as unknown as number || 0) + 1;
+
+    const levelManagerData = this.scene.settings.data as unknown as ILevelManagerData;
+
+    const nextLevel = levelManagerData?.level ?? +(window.localStorage.getItem(StorageNames.LEVEL) as unknown as number || 0) + 1;
 
     const levelSceneKey = `Level_${nextLevel}`;
     const levelScene = levels[nextLevel - 1];
     this.scene.add(levelSceneKey, levelScene);
 
-    this.input.on(EventNames.LEVEL_PASSED, () => {
-      this.scene.remove(levelSceneKey);
-      this.updateLevelState();
-
-      this.showPopup();
-    });
+    this.setEvents(levelSceneKey);
 
     this.scene.launch(levelSceneKey);
+  }
+  setEvents(levelSceneKey: string): void {
+    const levelManagerData = this.scene.settings.data as unknown as ILevelManagerData;
+
+    this.input.on(EventNames.LEVEL_PASSED, (force: boolean) => {
+      this.scene.remove(levelSceneKey);
+
+      if (levelManagerData?.level) {
+        this.scene.settings.data = null;
+        this.scene.start(SceneNames.EXTRA_FEATURES);
+        return;
+      } else {
+        if (force) {
+          this.scene.start(SceneNames.MENU);
+          return;
+        }
+        this.updateLevelState();
+        this.showPopup();
+      }
+    });
   }
   updateLevelState(): void {
     let currentLevel = window.localStorage.getItem(StorageNames.LEVEL) as unknown as number;

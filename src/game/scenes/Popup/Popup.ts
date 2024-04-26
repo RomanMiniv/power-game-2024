@@ -56,13 +56,13 @@ export default class Popup extends Phaser.Scene {
       text.setInteractive({
         useHandCursor: true,
       })
-        .on("pointerover", (event: unknown) => {
+        .on("pointerover", () => {
           text.setTint(0xff0000);
         })
-        .on("pointerout", (event: unknown) => {
+        .on("pointerout", () => {
           text.clearTint();
         })
-        .on("pointerdown", (event: unknown) => {
+        .on("pointerdown", () => {
           menuItem.callback();
           this.scene.stop(this);
         });
