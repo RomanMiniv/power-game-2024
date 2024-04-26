@@ -1,5 +1,6 @@
 import { SceneNames, StorageNames } from "../../shared/Names";
 import { Level } from "../Level/Level";
+import { levelConfig } from "../Level/LevelConfig";
 import { IPopupData } from "../Popup/Popup";
 
 
@@ -10,7 +11,7 @@ export class LoreIntro extends Level {
     "What is the power?",
     "So go on an adventure to find the answer to my question.\nOtherwise I will do some evil!",
     "I hope you don't expect it to be an easy journey,\nbecause my wards will be waiting for you on the way.",
-    "I will wait for you with an answer after 13 days, good luck mortal.",
+    `I will wait for you with an answer after ${levelConfig.levels.length} days, good luck mortal.`,
   ];
   private _currentText: number = 0;
 

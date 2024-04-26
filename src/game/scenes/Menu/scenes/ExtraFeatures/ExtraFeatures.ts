@@ -35,7 +35,7 @@ export default class ExtraFeatures extends Phaser.Scene {
       const isLevelUnlocked: boolean = currentLevel && currentLevel > index;
       const text: string = isLevelUnlocked ? level.powerName : "Locked power";
       const textElement = this.add.text(0, 0, text, {
-        fontSize: 28,
+        fontSize: 32,
       })
         .setOrigin(.5);
       textElement.y += index * (textElement.height * 2);
@@ -57,7 +57,7 @@ export default class ExtraFeatures extends Phaser.Scene {
 
       menuContainer.add(textElement);
     });
-    menuContainer.y = title.y * 2;
+    menuContainer.y = title.y * 2 + (menuContainer.list[0] as Phaser.GameObjects.Text).height * 2;
   }
 
   update(time: number, delta: number): void {

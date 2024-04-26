@@ -15,9 +15,7 @@ export default class Game extends Phaser.Scene {
       key: SceneNames.GAME,
       physics: {
         default: "arcade",
-        arcade: {
-          debug: true,
-        },
+        arcade: {},
       },
     });
   }
