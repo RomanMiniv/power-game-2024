@@ -55,7 +55,7 @@ export class EducationGame extends Level {
           {
             label: "Quit Game",
             callback: () => {
-              this.scene.stop("Game");
+              this.scene.stop(this);
               this.scene.start(SceneNames.MENU);
             },
           }

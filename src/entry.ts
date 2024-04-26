@@ -7,6 +7,7 @@ import ExtraFeatures from "./game/scenes/Menu/scenes/ExtraFeatures/ExtraFeatures
 import Credits from "./game/scenes/Menu/scenes/Credits/Credits";
 import Popup from "./game/scenes/Popup/Popup";
 import LevelManager from "./game/scenes/Level/LevelManager";
+import { LoreOutro } from "./game/scenes/Lore/LoreOutro";
 
 const parent = document.getElementById("root") as HTMLDivElement;
 
@@ -21,7 +22,7 @@ const config: Phaser.Types.Core.GameConfig = {
   },
   disableContextMenu: true,
   type: Phaser.AUTO,
-  scene: [Boot, Menu, Options, ExtraFeatures, Credits, Game, Popup, LevelManager],
+  scene: [Boot, Menu, Options, ExtraFeatures, Credits, Game, Popup, LevelManager, LoreOutro],
 };
 
 const game = new Phaser.Game(config);

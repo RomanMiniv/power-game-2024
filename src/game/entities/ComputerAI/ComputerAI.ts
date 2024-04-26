@@ -28,16 +28,15 @@ export class ComputerAI extends Phaser.Physics.Arcade.Group {
     });
   }
   generateWave(): void {
-    // bind to timer or add text like "new wave"
-  
+    // todo: bind to timer or add text like "new wave"
+
     const currentLevel = +window.localStorage.getItem(StorageNames.LEVEL);
 
-    console.error("new wave", currentLevel);
-
     const adtEnemies: number = Math.round(currentLevel / 2);
-    this.meleeManager.populate(Phaser.Math.Between(3 + adtEnemies, 5 + adtEnemies));
+    const adtRengers: number = Math.round(adtEnemies / 2)
+    this.meleeManager.populate(Phaser.Math.Between(3 + adtEnemies / 2, 5 + adtEnemies));
     this.kamikazeManager.populate(Phaser.Math.Between(1 + adtEnemies, 3 + adtEnemies));
-    this.rangerManager.populate(Phaser.Math.Between(1 + adtEnemies, 3 + adtEnemies));
+    this.rangerManager.populate(Phaser.Math.Between(1 + adtRengers, 3 + adtRengers));
   }
 
   update(): void {

@@ -1,4 +1,5 @@
-import { SceneNames, TextureNames } from "../../shared/Names";
+import { SceneNames, StorageNames, TextureNames } from "../../shared/Names";
+import { LoreIntro } from "../Lore/LoreIntro";
 
 export default class Boot extends Phaser.Scene {
   private _loaderProgressBar: Phaser.GameObjects.Graphics;
@@ -21,7 +22,16 @@ export default class Boot extends Phaser.Scene {
       this._progressPercentageText.setText(parseInt((String(amount * 100))) + "%");
     });
     this.load.on("complete", () => {
-      this.scene.start(SceneNames.MENU);
+      // todo: refactor, move to lore-manager
+      const isShowedIntro = window.localStorage.getItem(StorageNames.IS_SHOWED_INTRO);
+      if (!isShowedIntro) {
+        if (!this.scene.manager.getScene(SceneNames.LORE_INTRO)) {
+          this.scene.add(SceneNames.LORE_INTRO, LoreIntro);
+        }
+        this.scene.start(SceneNames.LORE_INTRO);
+      } else {
+        this.scene.start(SceneNames.MENU);
+      }
     });
 
     this.generateTextures();

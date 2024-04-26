@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
           {
             label: "Quit Game",
             callback: () => {
-              this.scene.stop("Game");
+              this.scene.stop(this);
               this.scene.start(SceneNames.MENU);
             },
           }
@@ -163,7 +163,7 @@ export default class Game extends Phaser.Scene {
   setVictory(): void {
     const currentLevel = +window.localStorage.getItem(StorageNames.LEVEL);
     if (currentLevel === levelConfig.levels.length) {
-      this.scene.start(SceneNames.MENU);
+      this.scene.start(SceneNames.LORE_OUTRO);  // todo: refactor, move to lore-manager
     } else {
       this.scene.start(SceneNames.LEVEL_MANAGER);
     }
@@ -186,7 +186,7 @@ export default class Game extends Phaser.Scene {
         {
           label: "Quit Game",
           callback: () => {
-            this.scene.stop("Game");
+            this.scene.stop(this);
             this.scene.start(SceneNames.MENU);
           },
         }
