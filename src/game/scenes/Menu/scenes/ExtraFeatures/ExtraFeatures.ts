@@ -25,7 +25,6 @@ export default class ExtraFeatures extends Phaser.Scene {
 
     const titleFontSize: number = 64;
     const title = this.add.text(60, 40, "Powers", {
-      color: "#e5e5e7",
       fontSize: titleFontSize,
     });
 
@@ -37,7 +36,6 @@ export default class ExtraFeatures extends Phaser.Scene {
       const text: string = isLevelUnlocked ? level.powerName : "Locked power";
       const textElement = this.add.text(0, 0, text, {
         fontSize: 28,
-        color: "#e5e5e7",
       })
         .setOrigin(.5);
       textElement.y += index * (textElement.height * 2);
