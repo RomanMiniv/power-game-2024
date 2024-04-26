@@ -3,6 +3,7 @@ import { Player } from "../../entities/Player/Player";
 import { ComputerAI } from "../../entities/ComputerAI/ComputerAI";
 import { levelConfig } from "../Level/LevelConfig";
 import { IPopupData } from "../Popup/Popup";
+import { gameConfig } from "./gameConfig";
 
 export default class Game extends Phaser.Scene {
   door: Phaser.GameObjects.Text;
@@ -28,6 +29,24 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    this.setEvents();
+
+    const { width, height } = gameConfig.world.size;
+    this.physics.world.setBounds(0, 0, width, height);
+    this.cameras.main.setBounds(0, 0, width, height);
+
+    // game stuff
+    this.setDoor();
+
+    // entities
+    this.setPlayer();
+
+    this.computerAI = new ComputerAI(this.physics.world, this);
+
+    // collision
+    this.setCollision();
+  }
+  setEvents() {
     const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     escKey.on("down", () => {
       this.scene.pause();
@@ -52,25 +71,11 @@ export default class Game extends Phaser.Scene {
       };
       this.scene.launch(SceneNames.POPUP, popupData);
     });
-
-    // todo: refactor world dimensions
-    const bg = this.add.image(0, 0, "prince").setOrigin(0).setAlpha(0);
-    this.physics.world.setBounds(0, 0, bg.width, bg.height);
-    this.cameras.main.setBounds(0, 0, bg.width, bg.height);
-
-    // game stuff
-    this.setDoor(bg);
-
-    // entities
-    this.setPlayer(bg);
-
-    this.computerAI = new ComputerAI(this.physics.world, this);
-
-    // collision
-    this.setCollision();
   }
-  setPlayer(bg: Phaser.GameObjects.Image): void {
-    this.player = new Player(this, bg.width / 2, bg.height / 2, TextureNames.RECT);
+  setPlayer(): void {
+    const { width, height } = gameConfig.world.size;
+
+    this.player = new Player(this, width / 2, height / 2, TextureNames.RECT);
     this.data.set("player", this.player);
 
     this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
@@ -122,13 +127,15 @@ export default class Game extends Phaser.Scene {
       this.setDefeat();
     });
   }
-  setDoor(bg: Phaser.GameObjects.Image): void {
+  setDoor(): void {
     this.add.timeline([
       {
         at: 0,
         run: () => {
-          this.door = this.add.text(Phaser.Math.Between(0, bg.width - 64), Phaser.Math.Between(0, bg.height - 64), "🚪", {
-            fontSize: 64,
+          const fontSize = 64;
+          const { width, height } = gameConfig.world.size;
+          this.door = this.add.text(Phaser.Math.Between(0, width - fontSize), Phaser.Math.Between(0, height - fontSize), "🚪", {
+            fontSize,
           }).setPadding(0, 10).setTint(0xff0000);
           this.physics.add.existing(this.door, true);
         }

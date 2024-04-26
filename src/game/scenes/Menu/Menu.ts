@@ -1,4 +1,5 @@
 import { SceneNames, StorageNames } from "../../shared/Names";
+import { EducationGame } from "../Game/EducationGame";
 import { levelConfig } from "../Level/LevelConfig";
 import { IPopupData } from "../Popup/Popup";
 import { menuConfig } from "./menuConfig";
@@ -46,6 +47,15 @@ export default class Menu extends Phaser.Scene {
         })
         .on("pointerdown", () => {
           if (menuItem.label.includes("Start")) { // todo: refactor
+            const isFirstRun = !window.localStorage.getItem(StorageNames.IS_FIRST_RUN);
+            if (isFirstRun) {
+              if (!this.scene.manager.getScene(SceneNames.EDUCATION_GAME)) {
+                this.scene.add(SceneNames.EDUCATION_GAME, EducationGame);
+              }
+              this.scene.start(SceneNames.EDUCATION_GAME);
+              return;
+            }
+
             const level = window.localStorage.getItem(StorageNames.LEVEL);
             if (level) {
               this.scene.pause(this);

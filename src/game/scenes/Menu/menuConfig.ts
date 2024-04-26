@@ -25,8 +25,5 @@ export const menuConfig: IMenuConfig[] = [
   {
     "label": "Credits",
     "sceneKey": SceneNames.CREDITS
-  },
-  {
-    "label": "Quit"
   }
 ];

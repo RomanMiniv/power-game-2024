@@ -1,3 +1,4 @@
+import { StorageNames } from "../../shared/Names";
 import { KamikazeManager } from "../Enemy/Kamikaze/KamikazeManager";
 import { MeleeManager } from "../Enemy/Melee/MeleeManager";
 import { RangerManager } from "../Enemy/Ranger/RangerManager";
@@ -28,11 +29,15 @@ export class ComputerAI extends Phaser.Physics.Arcade.Group {
   }
   generateWave(): void {
     // bind to timer or add text like "new wave"
-    console.error("new wave");
+  
+    const currentLevel = +window.localStorage.getItem(StorageNames.LEVEL);
 
-    this.meleeManager.populate(Phaser.Math.Between(3, 5));
-    this.kamikazeManager.populate(Phaser.Math.Between(1, 3));
-    this.rangerManager.populate(Phaser.Math.Between(1, 3));
+    console.error("new wave", currentLevel);
+
+    const adtEnemies: number = Math.round(currentLevel / 2);
+    this.meleeManager.populate(Phaser.Math.Between(3 + adtEnemies, 5 + adtEnemies));
+    this.kamikazeManager.populate(Phaser.Math.Between(1 + adtEnemies, 3 + adtEnemies));
+    this.rangerManager.populate(Phaser.Math.Between(1 + adtEnemies, 3 + adtEnemies));
   }
 
   update(): void {

@@ -13,6 +13,10 @@ export class LevelPlayer extends Player {
 
 export class Level extends Phaser.Scene {
   create() {
+    this.setEvents();
+  }
+
+  setEvents(): void {
     const escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     escKey.on("down", () => {
       this.scene.pause();
@@ -41,9 +45,12 @@ export class Level extends Phaser.Scene {
 
   showHint(text: string): Phaser.GameObjects.Text {
     const { width, height } = this.scale;
+    const fontSize: number = 24;
     const hint = this.add.text(width / 2, height - height / 8, text, {
-      fontSize: 24,
+      fontSize,
       color: "yellow",
+      align: "center",
+      lineSpacing: fontSize,
       backgroundColor: "#111",
     }).setPadding(10).setOrigin(.5);
     return hint;

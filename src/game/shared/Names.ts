@@ -15,6 +15,7 @@ export class SceneNames {
   static GAME = "Game";
   static POPUP = "Popup";
   static LEVEL_MANAGER = "LevelManager";
+  static EDUCATION_GAME = "EducationGame";
 }
 
 export class EventNames {
@@ -23,4 +24,5 @@ export class EventNames {
 
 export class StorageNames {
   static LEVEL = "level";
+  static IS_FIRST_RUN = "isFirstRun";
 }

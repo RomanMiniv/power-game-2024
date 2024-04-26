@@ -26,12 +26,7 @@ export default class Boot extends Phaser.Scene {
 
     this.generateTextures();
 
-    // mock bootloader
     // here load all assets
-    this.load.image("prince", "https://cdn2.unrealengine.com/popsot-1920x1081-3d5b172f8bc6.jpg");
-    for (let i = 0; i < 50; i++) {
-      this.load.image("prince" + i, "https://cdn2.unrealengine.com/popsot-1920x1081-3d5b172f8bc6.jpg");
-    }
   }
 
   drawBootloader() {
