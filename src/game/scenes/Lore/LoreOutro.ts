@@ -116,7 +116,11 @@ export class LoreOutro extends Level {
   }
   finish(): void {
     this.scene.start(SceneNames.MENU);
-    this.scene.remove(this);
+    this.resetState();
+  }
+
+  resetState() {
+    this._currentText = 0;
   }
 
   update(time: number, delta: number): void {
